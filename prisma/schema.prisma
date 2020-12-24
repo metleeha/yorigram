@@ -1,92 +1,75 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
-  // url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
-  //binaryTargets = ["rhel-openssl-1.0.x"] # AWS
-  //binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  username      String    @unique
-  email         String    @unique
-  firstName     String    @default("")
-  lastName      String    @default("")
-  bio           String    @default("")
-  followers     User[]    @relation("UserFollows", references: [id])
-  following     User[]    @relation("UserFollows", references: [id])
-  posts         Post[]
-  likes         Like[]
-  comments      Comment[]
-  rooms         Room[]
-  messagesFrom  Message[] @relation("MessageFrom")
-  messagesTo    Message[] @relation("MessageTo")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  email        String    @unique
+  firstName    String    @default("")
+  lastName     String    @default("")
+  bio          String    @default("")
+  comments     Comment[]
+  likes        Like[]
+  messagesFrom Message[] @relation("MessageFrom")
+  messagesTo   Message[] @relation("MessageTo")
+  followers    User[]    @relation("UserFollows")
+  following    User[]    @relation("UserFollows")
+  Post         Post[]
+  rooms        Room[]
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
-  user        User    @relation(fields:[userId], references: [id])
-  userId      Int
-  location    String
-  caption     String
-  files       File[]
-  likes       Like[]
-  comments    Comment[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id       Int       @id @default(autoincrement())
+  location String
+  caption  String
+  comments Comment[]
+  files    File[]
+  likes    Like[]
+  User     User[]
 }
 
 model Like {
-  id      Int       @id @default(autoincrement())
-  user        User    @relation(fields:[userId], references: [id])
-  userId      Int
-  post        Post    @relation(fields:[postId], references: [id])
-  postId      Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id     Int   @id @default(autoincrement())
+  userId Int?
+  postId Int?
+  post   Post? @relation(fields: [postId], references: [id])
+  user   User? @relation(fields: [userId], references: [id])
 }
 
 model Comment {
-  id          Int       @default(autoincrement()) @id
-  text        String
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
-  post        Post      @relation(fields: [postId], references: [id])
-  postId      Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id     Int   @id @default(autoincrement())
+  userId Int?
+  postId Int?
+  post   Post? @relation(fields: [postId], references: [id])
+  user   User? @relation(fields: [userId], references: [id])
 }
 
 model File {
-  id          Int       @default(autoincrement()) @id
-  url         String
-  post        Post      @relation(fields: [postId], references: [id])
-  postId      Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id     Int    @id @default(autoincrement())
+  url    String
+  postId Int?
+  post   Post?  @relation(fields: [postId], references: [id])
 }
 
 model Room {
-  id              Int      @id @default(autoincrement())
-  participants   User[]  
-  messages       Message[]
+  id           Int       @id @default(autoincrement())
+  messages     Message[]
+  participants User[]
 }
 
 model Message {
-  id      Int     @id @default(autoincrement())
-  text    String?
-  from    User   @relation("MessageFrom", fields: [fromId], references: [id])
-  to      User   @relation("MessageTo", fields: [toId], references: [id])   
-  room    Room?
-  fromId  Int
-  toId    Int
+  id     Int     @id @default(autoincrement())
+  text   String?
+  fromId Int
+  toId   Int
+  roomId Int?
+  from   User    @relation("MessageFrom", fields: [fromId], references: [id])
+  room   Room?   @relation(fields: [roomId], references: [id])
+  to     User    @relation("MessageTo", fields: [toId], references: [id])
 }
