@@ -3,8 +3,13 @@ const prisma = new PrismaClient()
 
 export default {
     Query: {
-        userById: (_: any, args: any) => {
-                return prisma.user.findUnique(args);
+        userById: async (_: any, args: any) => {
+                const { id } = args;
+                return await prisma.user.findUnique({
+                    where: {
+                        id: Number(id)
+                    }
+                })
         }
     }
 }

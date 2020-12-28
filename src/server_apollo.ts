@@ -1,11 +1,12 @@
 require("dotenv").config()
 import { ApolloServer } from 'apollo-server-express';
-import express from 'express';
+import  express from 'express';
 import logger from "morgan";
 import schema from './schema';
+import { createContext } from './context';
 
 const { PORT = 4000 } = process.env;
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({ schema, context:createContext });
 const app = express();
 
 app.use(logger("dev"));
