@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "2.13.1",
+    "apollo-server": "^2.19.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql-tools": "^7.0.2",
@@ -35,6 +36,9 @@
     "build": "babel src --out-dir lib --extensions '.ts,.tsx'",
     "dev": "nodemon --exec ts-node src/server.ts",
     "pretypes": "gql-merge --out-file ./src/schema.graphql ./src/api/**/*.graphql",
-    "types": "graphql-to-typescript ./src/schema.graphql ./src/types/graph.d.ts"
+    "types": "graphql-to-typescript ./src/schema.graphql ./src/types/graph.d.ts",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate dev --preview-feature",
+    "studio": "prisma studio"
   }
 }
