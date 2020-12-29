@@ -1,5 +1,6 @@
 migrations
 *.db
+.DS_Store
 
 # Logs
 logs
