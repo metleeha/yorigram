@@ -13,8 +13,7 @@ export default {
                     where: { email }
                 });
                 return true;
-            } catch (error) {
-                console.log(error);
+            } catch {
                 return false;
             }
         }
