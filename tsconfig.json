@@ -15,10 +15,13 @@
         "jsx": "react",
         "outDir": "dist",
         "rootDir": "src",
+        "typeRoots": ["node_modules/@types", "./@types"],
         "lib": ["esnext"],
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "dist",
+        "**/*.test.ts"
     ],
     "include": [
         "src/**/*"

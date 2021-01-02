@@ -31,7 +31,7 @@ export const sendSecretMail = (adress: String, secret: String) => {
     from: "ha.dong.lee@ibm.com",
     to: adress,
     subject: "🔐 Login Secret for Yorigram 🔐",
-    html: `Hello! Your login secret it ${secret}.<br/>Copy paste on the app/web site to log in`
+    html: `Hello! Your login secret it <strong>${secret}</strong>.<br/>Copy paste on the app/web site to log in`
   }
   return sendMail(email);
 }

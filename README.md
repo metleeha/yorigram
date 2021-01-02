@@ -3,10 +3,10 @@
 
 ## User Stories 
 
-- [ ] Log in 
-- [ ] Request Secret
-- [ ] Confirm Secret
 - [x] Create account
+- [x] Request Secret
+- [x] Confirm Secret
+- [ ] Log in 
 - [ ] Like / Unlike a photo
 - [ ] Comment on a photo
 - [ ] Search by user

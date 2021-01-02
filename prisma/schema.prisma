@@ -22,7 +22,7 @@ model User {
   following    User[]    @relation("UserFollows")
   Post         Post[]
   rooms        Room[]
-  loginSecret  String
+  loginSecret  String   @default("")
 }
 
 model Post {

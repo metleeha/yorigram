@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient()
+import { prisma } from '../../../context';
 
 export default {
     Mutation: {
@@ -7,11 +6,11 @@ export default {
             const { username, email, firstName = "", lastName = "", bio = "" } = args;
             const user = await prisma.user.create({
                 data: {
-                    username: username,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    bio: bio
+                    username,
+                    email,
+                    firstName,
+                    lastName,
+                    bio
                 }
             });
             return user;
